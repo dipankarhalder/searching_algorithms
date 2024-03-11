@@ -175,3 +175,80 @@ graph.addEdge("C", "E");
 
 console.log(graph.dfsRecursive("A"));
 ```
+
+#### 4. Breadth-First Search (BFS):
+
+Breadth-First Search (BFS) is a traversal algorithm used to explore nodes of a graph or tree data structure. It starts at a selected node and explores all its neighbors at the current depth before moving on to nodes at the next depth level.
+
+BFS can be implemented using a queue data structure to keep track of nodes to visit. It ensures that nodes are visited in a breadth-wise manner, i.e., nodes at the same level are visited before moving on to the next level.
+
+Input / Output:
+
+Input: A graph or tree data structure and a starting node.
+Output: The nodes visited in the order they were explored.
+
+Explanation:
+
+- Start at the selected node and mark it as visited.
+- Explore all the unvisited neighboring nodes of the current node.
+- Add these neighboring nodes to a queue.
+- Remove the first node from the queue and mark it as visited.
+- Repeat steps 2-4 until the queue is empty.
+
+```javascript
+class Graph {
+  constructor() {
+    this.adjacencyList = {};
+  }
+
+  // Add a vertex to the graph
+  addVertex(vertex) {
+    if (!this.adjacencyList[vertex]) {
+      this.adjacencyList[vertex] = [];
+    }
+  }
+
+  // Add an edge between two vertices
+  addEdge(vertex1, vertex2) {
+    this.adjacencyList[vertex1].push(vertex2);
+    this.adjacencyList[vertex2].push(vertex1); // For undirected graph
+  }
+
+  // Breadth-First Search
+  bfs(start) {
+    const visited = {};
+    const result = [];
+    const queue = [start];
+
+    visited[start] = true;
+
+    while (queue.length) {
+      const currentVertex = queue.shift();
+      result.push(currentVertex);
+
+      this.adjacencyList[currentVertex].forEach((neighbor) => {
+        if (!visited[neighbor]) {
+          visited[neighbor] = true;
+          queue.push(neighbor);
+        }
+      });
+    }
+
+    return result;
+  }
+}
+
+// Example usage:
+const graph = new Graph();
+graph.addVertex("A");
+graph.addVertex("B");
+graph.addVertex("C");
+graph.addVertex("D");
+graph.addVertex("E");
+graph.addEdge("A", "B");
+graph.addEdge("A", "C");
+graph.addEdge("B", "D");
+graph.addEdge("C", "E");
+
+console.log(graph.bfs("A"));
+```
