@@ -100,3 +100,78 @@ if (resultIndex !== -1) {
   console.log(`Element ${targetValue} not found in the array.`);
 }
 ```
+
+#### 3. Depth-First Search (DFS):
+
+Depth-First Search (DFS) is a traversal algorithm used to explore nodes of a graph or tree data structure. It starts at a selected node and explores as far as possible along each branch before backtracking.
+
+DFS can be implemented using either a recursive or iterative approach. The recursive approach is more straightforward and elegant, while the iterative approach typically uses a stack data structure to keep track of nodes to visit.
+
+Input / Output:
+
+Input: A graph or tree data structure and a starting node.
+Output: The nodes visited in the order they were explored.
+
+Explanation:
+
+- Start at the selected node and mark it as visited.
+- Explore the unvisited adjacent nodes recursively or iteratively.
+- Repeat step 2 for each unvisited adjacent node.
+- Backtrack if no unvisited adjacent nodes are left.
+
+```javascript
+class Graph {
+  constructor() {
+    this.adjacencyList = {};
+  }
+
+  // Add a vertex to the graph
+  addVertex(vertex) {
+    if (!this.adjacencyList[vertex]) {
+      this.adjacencyList[vertex] = [];
+    }
+  }
+
+  // Add an edge between two vertices
+  addEdge(vertex1, vertex2) {
+    this.adjacencyList[vertex1].push(vertex2);
+    this.adjacencyList[vertex2].push(vertex1); // For undirected graph
+  }
+
+  // Depth-First Search
+  dfsRecursive(start) {
+    const visited = {};
+    const result = [];
+
+    const dfs = (vertex) => {
+      if (!vertex) return;
+
+      visited[vertex] = true;
+      result.push(vertex);
+
+      this.adjacencyList[vertex].forEach((neighbor) => {
+        if (!visited[neighbor]) {
+          dfs(neighbor);
+        }
+      });
+    };
+
+    dfs(start);
+    return result;
+  }
+}
+
+// Example usage:
+const graph = new Graph();
+graph.addVertex("A");
+graph.addVertex("B");
+graph.addVertex("C");
+graph.addVertex("D");
+graph.addVertex("E");
+graph.addEdge("A", "B");
+graph.addEdge("A", "C");
+graph.addEdge("B", "D");
+graph.addEdge("C", "E");
+
+console.log(graph.dfsRecursive("A"));
+```
